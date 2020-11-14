@@ -1,3 +1,4 @@
+import Problem1.InOrderTraverse;
 import Problem1.TreeNode;
 import Problem3.InsertInBST;
 import org.junit.Test;
@@ -36,6 +37,8 @@ public class Problem3Test {
     public void testInOrderTraverse() {
         // homework
         // to verify inOrderTraverse(TreeNode<Integer> node)
+        TreeNode<Integer> result = new TreeNode<>(null);
+        inOrderTraverse(result);
     }
 
     private static List<Integer> inOrderTraverse(TreeNode<Integer> node) {
@@ -146,9 +149,10 @@ public class Problem3Test {
         //    N   N
         // homework
         // what problem can you see for insertInBst from this test case?
-        // answer:
+        // answer: the problem is that when you add the nodes into the TreeNode one at a time the amount of
+        //         memory used increases iteratively since you are calling the add() function each time.
         // discuss how you would solve it in a comment below
-        // answer:
+        // answer: create a function that can add a list of nodes into a TreeNode so the total memory is reduced.
         root = new TreeNode<>(1);
         testCases.add(new BSTTestCase<>(root, 2, Arrays.asList(1, 2)));
         testCases.add(new BSTTestCase<>(root, 3, Arrays.asList(1, 2, 3)));
