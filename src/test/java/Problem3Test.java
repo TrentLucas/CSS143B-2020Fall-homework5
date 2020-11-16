@@ -1,3 +1,4 @@
+import Problem1.InOrderTraverse;
 import Problem1.TreeNode;
 import Problem3.InsertInBST;
 import org.junit.Test;
@@ -20,6 +21,15 @@ public class Problem3Test {
             this.expect = expect;
         }
     }
+    public static class IOTTestCase<T> {
+        final TreeNode<T> tree;
+        final List<T> expect;
+
+        public IOTTestCase(TreeNode<T> tree, List<T> expect) {
+            this.tree = tree;
+            this.expect = expect;
+        }
+    }
 
     @Test
     public void testInsertBST() {
@@ -36,6 +46,12 @@ public class Problem3Test {
     public void testInOrderTraverse() {
         // homework
         // to verify inOrderTraverse(TreeNode<Integer> node)
+        List<IOTTestCase<Integer>> testCases = getIOTTestCases();
+        for (int i = 0; i < testCases.size(); i++) {
+            IOTTestCase<Integer> testCase = testCases.get(i);
+            List<Integer> result = inOrderTraverse(testCase.tree);
+            assertEquals(testCase.expect, result);
+        }
     }
 
     private static List<Integer> inOrderTraverse(TreeNode<Integer> node) {
@@ -53,6 +69,44 @@ public class Problem3Test {
         inOrderTraverse(node.right, result);
     }
 
+
+    private List<IOTTestCase<Integer>> getIOTTestCases() {
+        List<IOTTestCase<Integer>> testCases = new ArrayList<>();
+
+        testCases.add(new IOTTestCase<>(new TreeNode<>(1), Arrays.asList(1)));
+
+        TreeNode<Integer> root = new TreeNode<>(2);
+        root.left = new TreeNode<>(1);
+        testCases.add(new IOTTestCase<>(root, Arrays.asList(1, 2)));
+
+        root = new TreeNode<>(4);
+        root.left = new TreeNode<>(2);
+        root.right = new TreeNode<>(6);
+        testCases.add(new IOTTestCase<>(root, Arrays.asList(2, 4, 6)));
+
+        root = new TreeNode<>(4);
+        root.left = new TreeNode<>(2);
+        root.left.left = new TreeNode<>(1);
+        root.left.right = new TreeNode<>(3);
+        root.right = new TreeNode<>(6);
+        root.right.left = new TreeNode<>(5);
+        root.right.right = new TreeNode<>(7);
+        testCases.add(new IOTTestCase<>(root, Arrays.asList(1, 2, 3, 4, 5, 6, 7)));
+
+        root = new TreeNode<>(13);
+        root.left = new TreeNode<>(7);
+        root.left.left = new TreeNode<>(5);
+        root.left.right = new TreeNode<>(10);
+        root.left.left.left = new TreeNode<>(1);
+        root.right = new TreeNode<>(45);
+        root.right.left = new TreeNode<>(24);
+        root.right.right = new TreeNode<>(76);
+        testCases.add(new IOTTestCase<>(root, Arrays.asList(1, 5, 7, 10, 13, 24, 45, 76)));
+
+
+
+        return testCases;
+    }
 
     private List<BSTTestCase<Integer>> getBSTTestCases() {
         List<BSTTestCase<Integer>> testCases = new ArrayList<>();
@@ -146,9 +200,10 @@ public class Problem3Test {
         //    N   N
         // homework
         // what problem can you see for insertInBst from this test case?
-        // answer:
+        // answer: the problem is that when you add the nodes into the TreeNode one at a time the amount of
+        //         memory used increases iteratively since you are calling the add() function each time.
         // discuss how you would solve it in a comment below
-        // answer:
+        // answer: create a function that can add a list of nodes into a TreeNode so the total memory is reduced.
         root = new TreeNode<>(1);
         testCases.add(new BSTTestCase<>(root, 2, Arrays.asList(1, 2)));
         testCases.add(new BSTTestCase<>(root, 3, Arrays.asList(1, 2, 3)));
